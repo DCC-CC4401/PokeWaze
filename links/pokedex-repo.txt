@@ -1,0 +1,1 @@
+https://github.com/veekun/pokedex/blob/master/pokedex/data/csv/

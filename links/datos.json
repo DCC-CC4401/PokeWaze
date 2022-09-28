@@ -1,0 +1,8 @@
+{
+    "pokemon": "https://github.com/veekun/pokedex/blob/master/pokedex/data/csv/",
+    "evolutions": "https://raw.githubusercontent.com/veekun/pokedex/master/pokedex/data/csv/pokemon_evolution.csv",
+    "generations": "https://raw.githubusercontent.com/veekun/pokedex/master/pokedex/data/csv/generations.csv",
+    "generationsNames": "https://raw.githubusercontent.com/veekun/pokedex/master/pokedex/data/csv/generation_names.csv",
+    "pokemonTypes": "https://raw.githubusercontent.com/veekun/pokedex/master/pokedex/data/csv/pokemon_types.csv",
+    "types": "https://raw.githubusercontent.com/veekun/pokedex/master/pokedex/data/csv/types.csv"
+}
