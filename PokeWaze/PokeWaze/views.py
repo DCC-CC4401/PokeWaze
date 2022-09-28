@@ -23,11 +23,6 @@ def obtener_pokemon(request:str,pkmn:str)->HttpResponse:
         HttpResponse: Genera la respuesta de la página Http con "Hello World".
     """
     df = pd.read_csv("https://raw.githubusercontent.com/veekun/pokedex/master/pokedex/data/csv/pokemon.csv")
-    df_filter = df[df["identifier"]==pkmn]
-    res = ""
-    for feature, value in zip(df_filter.keys(),df_filter.values[0]):
-        res = res + f"{feature}: {value}\n"
-    del df
-    del df_filter
+    df_filter = df[df["identifier"]==pkmn.lower()]
 
-    return HttpResponse(res)
+    return HttpResponse(df_filter.T.to_html(header=False))
