@@ -1,0 +1,4 @@
+https://github.com/veekun/pokedex/blob/master/pokedex/data/csv/
+
+/// HOW TO SPRITES:
+https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<PKMN ID>.png
