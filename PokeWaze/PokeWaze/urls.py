@@ -15,10 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from PokeWaze.views import saludo, obtener_pokemon
+from PokeWaze.views import obtener_pokemon, home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("saludo/", saludo),
-    path("info/<str:pkmn>",obtener_pokemon)
+    path("",home),
+    path("info/<str:pkmn>",obtener_pokemon),
 ]

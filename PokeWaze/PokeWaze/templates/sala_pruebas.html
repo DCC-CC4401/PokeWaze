@@ -1,0 +1,11 @@
+<html>
+    {% include "base/template_base.html"%}
+    <h1>
+        Datos {{name}}
+    </h1>
+    <p>
+        {% for feature,value in pkmn%}
+            <p><strong>{{feature}} </strong>: {{value}}</p>
+        {% endfor %}
+    </p>
+</html>
