@@ -17,15 +17,20 @@ def obtener_pokemon(request:str,pkmn:str)->render:
     """
     # Generamos datos para la página
     df = pd.read_csv("https://raw.githubusercontent.com/veekun/pokedex/master/pokedex/data/csv/pokemon.csv")
-    df_filter = df[df["identifier"]==pkmn.lower()].reset_index().T
-    
+    # Checkeemos si el usuario entregó la id en vez del nombre
+    if pkmn.isnumeric():
+        df_filter = df[df["id"]==int(pkmn)].reset_index().T
+    else:
+        df_filter = df[df["identifier"]==pkmn.lower()].reset_index().T
+    # Obtener data e imagen
     data_pkmn = df_filter.to_dict()[0].items()
     id_pkmn = list(data_pkmn)[1][1]
+    name_pkmn = list(data_pkmn)[2][1]
     
     # Agregamos las variables a traves de un diccionario al html
     # Subimos la página
     return render(request=request,
                   template_name="sala_pruebas.html",
                   context={"pkmn":data_pkmn,
-                  "name":pkmn,
+                  "name":name_pkmn,
                   "imageURL":f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{id_pkmn}.png"})
