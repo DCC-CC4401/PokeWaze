@@ -20,9 +20,12 @@ def obtener_pokemon(request:str,pkmn:str)->render:
     df_filter = df[df["identifier"]==pkmn.lower()].reset_index().T
     
     data_pkmn = df_filter.to_dict()[0].items()
+    id_pkmn = list(data_pkmn)[1][1]
     
     # Agregamos las variables a traves de un diccionario al html
     # Subimos la página
     return render(request=request,
                   template_name="sala_pruebas.html",
-                  context={"pkmn":data_pkmn,"name":pkmn})
+                  context={"pkmn":data_pkmn,
+                  "name":pkmn,
+                  "imageURL":f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{id_pkmn}.png"})
