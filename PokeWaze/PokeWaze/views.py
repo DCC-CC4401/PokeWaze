@@ -22,6 +22,10 @@ def obtener_pokemon(request:str,pkmn:str)->render:
         df_filter = df[df["id"]==int(pkmn)].reset_index().T
     else:
         df_filter = df[df["identifier"]==pkmn.lower()].reset_index().T
+    # si df_filter está vacío, el pokemon no es valido
+    if df_filter.empty:
+        return render(request=request,
+                       template_name="base/404.html")
     # Obtener data e imagen
     data_pkmn = df_filter.to_dict()[0].items()
     id_pkmn = list(data_pkmn)[1][1]
