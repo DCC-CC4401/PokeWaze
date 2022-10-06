@@ -1,0 +1,62 @@
+{% extends "template.html" %}
+
+{% block title %}
+PokéWaze: {{name}}
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <div class="pokemon-info">
+      <h2>{{name}}</h2>
+      <p>
+        Pikachu (ピカチュウ Pikachū?) es una de las criaturas de la franquicia
+        Pokémon. Este personaje hizo su primera aparición en los videojuegos
+        Pokémon Rojo y Azul (Verde en Japón), siendo el Pokémon número 25 de
+        la lista de Pokémon registrada en el Pokédex nacional. Al igual que
+        todos los Pokémon, Pikachu lucha en batallas fundamentales en el
+        anime, manga y videojuegos de la serie. Pikachu es el Pokémon más
+        conocido de la historia ya que es el acompañante del protagonista de
+        la serie, Ash Ketchum y la mascota representante de la franquicia
+        Pokémon. Pikachu evoluciona de Pichu cuando incrementa su nivel de
+        amistad, y evoluciona en Raichu con una piedra trueno en la región de
+        Kanto, en la región de Alola, al exponer a Pikachu a una piedra
+        trueno, este evoluciona a Raichu de Alola. Dentro del mundo de la
+        franquicia Pokémon, los Pikachu son generalmente encontrados en casas,
+        bosques, planicies, y ocasionalmente cerca de montañas, islas y
+        fuentes eléctricas, en la mayoría de las regiones del mundo Pokémon.
+      </p>
+    </div>
+    <div class="card" style="width: 18rem">
+      <p>
+        <img
+          src="media/Energía_rayo.png"
+          class="energt-type"
+          width="20"
+          height="20"
+          align="right"
+          alt=""
+        />
+        {{name}}
+      </p>
+      <img src={{imageURL}} width="250" height="250" class="card-img-top" alt="..." />
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">
+          {% for feature,value in pkmn%}
+            <p><strong>{{feature}} </strong>: {{value}}</p>
+          {% endfor %}
+        </p>
+        <h3>Moves:</h3>
+        <ul>
+          <li>Flame Wheel</li>
+          <li>Fire Spin</li>
+          <li>Flamethrower</li>
+        </ul>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- dajsiodiadiasjdsdopasjdsajiodas -->
+{% endblock %}

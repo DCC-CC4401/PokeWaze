@@ -3,7 +3,7 @@ import pandas as pd
 
 def home(request:str)->render:
     return render(request=request,
-                  template_name="base/template_base.html")
+                  template_name="template.html")
 
 def obtener_pokemon(request:str,pkmn:str)->render:
     """Entrega información sobre el Pokémon
@@ -25,7 +25,7 @@ def obtener_pokemon(request:str,pkmn:str)->render:
     # si df_filter está vacío, el pokemon no es valido
     if df_filter.empty:
         return render(request=request,
-                       template_name="base/404.html")
+                       template_name="404.html")
     # Obtener data e imagen
     data_pkmn = df_filter.to_dict()[0].items()
     id_pkmn = list(data_pkmn)[1][1]
@@ -34,7 +34,7 @@ def obtener_pokemon(request:str,pkmn:str)->render:
     # Agregamos las variables a traves de un diccionario al html
     # Subimos la página
     return render(request=request,
-                  template_name="sala_pruebas.html",
+                  template_name="search/search.html",
                   context={"pkmn":data_pkmn,
                   "name":name_pkmn,
                   "imageURL":f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{id_pkmn}.png"})

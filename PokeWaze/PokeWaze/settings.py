@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "TurboGraphDex",
+    "gestionUsuarios"
 ]
 
 MIDDLEWARE = [
@@ -55,7 +57,10 @@ ROOT_URLCONF = 'PokeWaze.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,"PokeWaze/templates")],
+        'DIRS': [os.path.join(BASE_DIR,"PokeWaze/templates"),
+                 os.path.join(BASE_DIR,"TurboGraphDex/templates"),
+                 os.path.join(BASE_DIR,"gestionUsuarios/templates"),
+                 ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from PokeWaze.views import obtener_pokemon, home
+import TurboGraphDex.views as dex
+import gestionUsuarios.views as user
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("",home),
-    path("info/<str:pkmn>",obtener_pokemon),
+    path("home/",dex.home),
+    path("menu/",user.menu_usuarios),
+    path("info/<str:pkmn>",dex.obtener_pokemon),
 ]
