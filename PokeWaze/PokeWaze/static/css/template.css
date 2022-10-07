@@ -1,0 +1,9 @@
+body {
+  background-color: grey;
+}
+
+.container {
+  margin-top: 1%;
+  background-color: darkgrey;
+  padding: 1%;
+}

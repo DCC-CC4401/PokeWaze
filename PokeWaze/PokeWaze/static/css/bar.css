@@ -1,0 +1,6 @@
+.navbar-brandname {
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  transform: translatex(-50%);
+}
