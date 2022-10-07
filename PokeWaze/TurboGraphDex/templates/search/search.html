@@ -1,14 +1,16 @@
 {% extends "template.html" %}
 
+{% load static %}
+
 {% block title %}
 PokéWaze: {{name}}
 {% endblock %}
 
 
 {% block content %}
-<div class="container">
-    <div class="pokemon-info">
+      <!-- Name -->
       <h2>{{name}}</h2>
+      <!-- Description -->
       <p>
         Pikachu (ピカチュウ Pikachū?) es una de las criaturas de la franquicia
         Pokémon. Este personaje hizo su primera aparición en los videojuegos
@@ -27,10 +29,11 @@ PokéWaze: {{name}}
         fuentes eléctricas, en la mayoría de las regiones del mundo Pokémon.
       </p>
     </div>
+    <!-- Card -->
     <div class="card" style="width: 18rem">
       <p>
         <img
-          src="media/Energía_rayo.png"
+          src="{% static 'TurboGraphDex/media/Energía_rayo.png' %}"
           class="energt-type"
           width="20"
           height="20"
@@ -39,24 +42,28 @@ PokéWaze: {{name}}
         />
         {{name}}
       </p>
+      <!-- Image Pokémon -->
       <img src={{imageURL}} width="250" height="250" class="card-img-top" alt="..." />
       <div class="card-body">
         <h5 class="card-title">Card title</h5>
         <p class="card-text">
+
+          <!-- Data Pokémon -->
           {% for feature,value in pkmn%}
-            <p><strong>{{feature}} </strong>: {{value}}</p>
+            <li><strong>{{feature}} </strong>: {{value}}</li>
           {% endfor %}
         </p>
+
+        <!-- Moves Pokémon -->
         <h3>Moves:</h3>
         <ul>
           <li>Flame Wheel</li>
           <li>Fire Spin</li>
           <li>Flamethrower</li>
         </ul>
+
+        <!-- Button -->
         <a href="#" class="btn btn-primary">Go somewhere</a>
       </div>
-    </div>
-  </div>
-
   <!-- dajsiodiadiasjdsdopasjdsajiodas -->
 {% endblock %}

@@ -1,0 +1,41 @@
+body {
+  background-color: grey;
+}
+
+.navbar-brandname {
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  transform: translatex(-50%);
+}
+
+.container {
+  margin-top: 1%;
+  background-color: darkgrey;
+  padding: 1%;
+}
+
+.my-card {
+  background-image: url(media/background/lightning.png);
+  border: 8px solid #ffe264;
+  border-radius: 5px;
+  padding: 1%;
+  padding-top: 0.5%;
+  padding-bottom: 0;
+  text-align: left;
+  font-size: 18px;
+}
+
+#card-top{
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif bold;
+}
+
+#card-bot{
+  padding-top: 3%;
+  font: 'Gill Sans MT' condensed;
+}
+
+#pokemon-image {
+  border: 5px solid #e2e1e1;
+  border-radius: 3px;
+}
