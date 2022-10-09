@@ -15,12 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-import TurboGraphDex.views as dex
+import WikiDex.views as wiki
 import gestionUsuarios.views as user
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("home/",dex.home),
-    path("menu/",user.menu_usuarios),
-    path("info/<str:pkmn>",dex.obtener_pokemon),
+    path("home/",wiki.home),
+    path("UserMenu/",user.menu_usuarios),
+    path("info/<str:pkmn>",wiki.obtener_pokemon),
 ]

@@ -29,41 +29,7 @@ PokéWaze: {{name}}
         fuentes eléctricas, en la mayoría de las regiones del mundo Pokémon.
       </p>
     </div>
-    <!-- Card -->
-    <div class="card" style="width: 18rem">
-      <p>
-        <img
-          src="{% static 'media/energy/lightning.webp' %}"
-          class="energt-type"
-          width="20"
-          height="20"
-          align="right"
-          alt=""
-        />
-        {{name}}
-      </p>
-      <!-- Image Pokémon -->
-      <img src={{imageURL}} width="250" height="250" class="card-img-top" alt="..." />
-      <div class="card-body">
-        <h5 class="card-title">Atributos</h5>
-        <p class="card-text">
-
-          <!-- Data Pokémon -->
-          {% for feature,value in pkmn%}
-            <li><strong>{{feature}} </strong>: {{value}}</li>
-          {% endfor %}
-        </p>
-
-        <!-- Moves Pokémon -->
-        <h3>Moves:</h3>
-        <ul>
-          <li>Flame Wheel</li>
-          <li>Fire Spin</li>
-          <li>Flamethrower</li>
-        </ul>
-
-        <!-- Button -->
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-      </div>
+    {% include "parts/cards.html" %}
+    
   <!-- dajsiodiadiasjdsdopasjdsajiodas -->
 {% endblock %}
