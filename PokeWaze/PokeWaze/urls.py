@@ -17,10 +17,20 @@ from django.contrib import admin
 from django.urls import path
 import WikiDex.views as wiki
 import gestionUsuarios.views as user
+from django.contrib.auth.views import LoginView, LogoutView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("home/",wiki.home),
-    path("UserMenu/",user.menu_usuarios),
-    path("info/<str:pkmn>",wiki.obtener_pokemon),
+    path("home/", wiki.home, name="home"),
+    path("info/<str:pkmn>", wiki.obtener_pokemon),
+    path("menu/", user.menu_usuarios, name="menu_user"),
+    path("register/", user.user_register, name="registro"),
+    path("profile/<str:username>", user.user_profile, name="perfil"),
+    path("login/", LoginView.as_view(
+        template_name="login.html"
+    ), name="login"),
+    path("logout/", LogoutView.as_view(
+        template_name="logout.html"
+    ), name="logout"),
 ]
