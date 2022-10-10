@@ -1,14 +1,13 @@
-from msilib.schema import ListView
 from django.shortcuts import render
 
 # Create your views here.
 import pandas as pd
 
-def home(request:str,pkmn:str)->render:
+def home(request:str)->render:
     return render(request=request,
                   template_name="template.html")
 
-def obtener_pokemon(request:str,pkmn:str)->render:
+def obtener_pokemon(request:str)->render:
     """Entrega información sobre el Pokémon
 
     Args:
@@ -18,16 +17,22 @@ def obtener_pokemon(request:str,pkmn:str)->render:
     Returns:
         render: Genera la respuesta de la página Http con "Hello World".
     """
+    
+    
     # Request
-    if request.method == "POST":
-        pkmn = request.POST["nameorid"]
+    pkmn = request.GET["nameorid"]
+    
+    data_http = {} # Info a web
+    
     # Generamos datos para la página
     df = pd.read_csv("https://raw.githubusercontent.com/veekun/pokedex/master/pokedex/data/csv/pokemon.csv")
+    
     # Checkeemos si el usuario entregó la id en vez del nombre
     if pkmn.isnumeric():
         df_filter = df[df["id"]==int(pkmn)].reset_index().T
     else:
         df_filter = df[df["identifier"]==pkmn.lower()].reset_index().T
+    
     # si df_filter está vacío, el pokemon no es valido
     if df_filter.empty:
         return render(request=request,

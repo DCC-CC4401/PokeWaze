@@ -64,7 +64,7 @@
               height="35"
             />
           </a>
-          <form class="d-flex" method="post" action="{% url 'info-pkmn' id %}">
+          <form class="d-flex" method="GET" action="/info/">
             {% csrf_token %}
             <input
               class="form-control me-2 bg-dark"
