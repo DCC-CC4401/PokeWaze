@@ -1,9 +1,10 @@
+from msilib.schema import ListView
 from django.shortcuts import render
 
 # Create your views here.
 import pandas as pd
 
-def home(request:str)->render:
+def home(request:str,pkmn:str)->render:
     return render(request=request,
                   template_name="template.html")
 
@@ -17,6 +18,9 @@ def obtener_pokemon(request:str,pkmn:str)->render:
     Returns:
         render: Genera la respuesta de la página Http con "Hello World".
     """
+    # Request
+    if request.method == "POST":
+        pkmn = request.POST["nameorid"]
     # Generamos datos para la página
     df = pd.read_csv("https://raw.githubusercontent.com/veekun/pokedex/master/pokedex/data/csv/pokemon.csv")
     # Checkeemos si el usuario entregó la id en vez del nombre
@@ -39,4 +43,7 @@ def obtener_pokemon(request:str,pkmn:str)->render:
                   template_name="search.html",
                   context={"pkmn":data_pkmn,
                   "name":name_pkmn,
+                  "id":id_pkmn,
                   "imageURL":f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{id_pkmn}.png"})
+
+
