@@ -1,4 +1,8 @@
 from django.shortcuts import render
+from pathlib import Path
+import os
+
+CVS_DIR = Path(__file__).resolve().parent.parent.parent.joinpath("csv")
 
 # Create your views here.
 import pandas as pd
@@ -25,13 +29,13 @@ def obtener_pokemon(request:str)->render:
     data_http = {} # Info a web
     
     # Generamos datos para la página
-    df = pd.read_csv("https://raw.githubusercontent.com/veekun/pokedex/master/pokedex/data/csv/pokemon.csv")
+    df = pd.read_csv(os.path.join(CVS_DIR,"pokemon.csv"))
     
     # Checkeemos si el usuario entregó la id en vez del nombre
     if pkmn.isnumeric():
         df_filter = df[df["id"]==int(pkmn)].reset_index().T
     else:
-        df_filter = df[df["identifier"]==pkmn.lower()].reset_index().T
+        df_filter = df[df["identifier"]==pkmn.replace(" ","-").lower()].reset_index().T
     
     # si df_filter está vacío, el pokemon no es valido
     if df_filter.empty:
