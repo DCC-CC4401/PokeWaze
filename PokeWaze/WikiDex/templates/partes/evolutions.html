@@ -1,0 +1,15 @@
+<html>
+    <h3>
+        Evoluciona a...
+    </h3>
+    {% for name, ident in after %}
+        <li><a href="http://localhost:8000/info/?csrfmiddlewaretoken=NazlLzVD5XlGuQSp7dkQtG4dRUSrgameTuJ9hc96AKfxNhM9K3Lu3e2aW23Vnf0C&nameorid={{ident}}">{{name}}</a></li>
+    {% endfor %}
+    <h3>
+        Evoluciona de...
+    </h3>
+    {% for name, ident in before %}
+        <li><a href="http://localhost:8000/info/?csrfmiddlewaretoken=NazlLzVD5XlGuQSp7dkQtG4dRUSrgameTuJ9hc96AKfxNhM9K3Lu3e2aW23Vnf0C&nameorid={{ident}}">{{name}}</a></li>
+    {% endfor %}
+        
+</html>
