@@ -2,6 +2,7 @@ from turtle import title
 from django.shortcuts import render
 from pathlib import Path
 import os
+import requests
 
 CVS_DIR = Path(__file__).resolve().parent.parent.parent.joinpath("csv")
 
@@ -70,6 +71,14 @@ def obtener_pokemon(request:str)->render:
     # list_forms (list(str)): Lista de otras formas del Pokémon.
     list_forms = list_evolutions["other"]
     
+    # descripción del pkmn (quedan a la chucha)
+    req = requests.get(f"https://www.pokemon.com/us/pokedex/{pkmn_name}/", 'html.parser')
+    start_idx = req.text.find('<div class="version-descriptions active">')
+    text = req.text[start_idx:]
+    pkmn_desc = text.split('\n')[5].strip() + '\n' + text.split('\n')[10].strip()
+    del text
+    req.close()
+
     # Agregamos las variables a traves de un diccionario al html
     # Subimos la página
     return render(request=request,
@@ -80,6 +89,7 @@ def obtener_pokemon(request:str)->render:
                   "before": list_evolutions["before"],
                   "after": list_evolutions["after"],
                   "id":pkmn_id,
+                  "desc":pkmn_desc,
                   "imageURL":f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{pkmn_id}.png"})
 
 
