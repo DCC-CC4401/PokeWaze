@@ -9,14 +9,24 @@
     <nav class="navbar navbar-expand-lg bg-dark">
       <div class="container-fluid">
         <img src="{% static 'media/trash.png' %}" width="32" height="32" alt="" />
-        
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            {% if user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="error.html"
-                >error</a
-              >
+              <a class="nav-link active" href="{% url 'logout' %}">Log Out</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url 'perfil' %}">Profile</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url 'login' %}">Log In</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url 'registro' %}">Create Account</a>
+            </li>
+            {% endif %}
+            
             <li class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle"
@@ -36,23 +46,9 @@
                 </li>
               </ul>
             </li>
-            
-            {% if user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'perfil' %}">Profile</a>
+              <a class="nav-link disabled" aria-current="page" href="error.html">error</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-            </li>
-            {% else %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'login' %}">Log In</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'registro' %}">Create Account</a>
-            </li>
-            {% endif %}
-          
           </ul>
 
           <a class="navbar-brandname" href="{% url 'home' %}">
