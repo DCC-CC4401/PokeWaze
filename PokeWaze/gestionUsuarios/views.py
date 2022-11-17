@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import UserRegisterForm
 from django.contrib import messages
-
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def menu_usuarios(request:str)->render:
@@ -11,32 +11,30 @@ def menu_usuarios(request:str)->render:
   )
 
 def user_register(request:str)->render:
-  if request == "POST":
+  if request.method == "POST":
     form = UserRegisterForm(request.POST)
     if form.is_valid():
       form.save()
       username = form.cleaned_data["username"]
-      messages.success(request, f"Usuario creado exitosamente")
-      return redirect("home")
+      messages.success(request, "Usuario creado exitosamente")
+      print("good")
+      return redirect(f'profile/{username}')
+    else:
+      messages.error(request, "Parámetros inválidos")
+      print("bad")
   else:
     form = UserRegisterForm()
   return render(
-    request=request,
+    request,
     template_name='register.html',
     context={
       "form":form
     }
   )
 
-def user_profile(request:str, username:str)->render:
-  if False:
-    temp = "profile.html"
-  else:
-    temp = "userNotFounded.html"
+@login_required
+def user_profile(request:str)->render:
   return render(
-    request=request,
-    template_name=temp,
-    context={
-      "username":username
-    }
+    request,
+    template_name="profile.html",
   )

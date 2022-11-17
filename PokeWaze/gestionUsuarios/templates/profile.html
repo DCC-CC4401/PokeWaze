@@ -2,10 +2,12 @@
 
 <!-- Title page -->
 {% block title %}
-{{username}}
+Profile
 {% endblock %}
 
 <!-- Content page -->
 {% block content %}
-<h2> {{username}} </h2>
+<p>
+  <b>Name:</b> {{user.username}}
+</p>
 {% endblock %}
