@@ -87,3 +87,8 @@ def list_of_users(request:str)->render:
     }
   )
 
+def add_pkmn(request:str)->render:
+  return render(
+    request=request,
+    template_name="add_pkmn.html"
+  )
