@@ -10,12 +10,14 @@ Profile
 <h2>Account Information</h2>
 <p>
   <b>Name:</b> {{lookigUser.username}}
+  {% if user == lookigUser %}
   <br>
   <b>Email:</b> <a href="mailto:{{lookigUser.email}}">{{lookigUser.email}}</a>
 </p>
-{% if user == lookigUser %}
 <a href="{% url 'editar_perfil' %}" style="border: solid; border-color: inherit;
 color: inherit; background-color: #e0e0e0; padding: 3px 7px;">Edit Profile</a>
+{% else %}
+</p>
 {% endif %}
 <h2>Personal Pokedex</h2>
 <p>

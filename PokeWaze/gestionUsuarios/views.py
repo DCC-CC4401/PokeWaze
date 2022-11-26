@@ -45,6 +45,7 @@ def user_profile(request:str, aUsername:str)->render:
         "searched_username":aUsername,
       }
     )
+  #searchedUser.id
   return render(
     request,
     template_name="profile.html",
