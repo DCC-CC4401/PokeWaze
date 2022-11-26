@@ -7,7 +7,25 @@ Profile
 
 <!-- Content page -->
 {% block content %}
+<h2>Account Information</h2>
 <p>
   <b>Name:</b> {{user.username}}
+  <br>
+  <b>Email:</b> <a href="mailto:{{user.email}}">{{user.email}}</a>
+</p>
+<button href="{% url 'editar_perfil' %}">Edit Profile</button>
+<h2>Personal Pokedex</h2>
+<p>
+  {% for pkmn_id in pkmn_list %} <!-- puede ser tb user.caja -->
+  <a href="{% url 'buscar' %}{{pkmn_id}}">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{pkmn_id}}.png"
+    width="150" height="150">
+  </a>
+  {% if forloop.counter|divisibleby:5 %}
+  <br>
+  {% endif %}
+  {% empty %}
+  You have not registered your pokemons yet.
+  {% endfor %}
 </p>
 {% endblock %}

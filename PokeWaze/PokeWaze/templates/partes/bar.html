@@ -22,7 +22,11 @@
             </li>
             <li class="nav-item">
               <a class="nav-link active" style="color: #F0F0F0"
-              href="{% url 'perfil' %}">Profile</a>
+              href="{% url 'perfil' %}{{user.username}}">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" style="color: #F0F0F0"
+              href="{% url 'perfiles' %}">PokeWazers</a>
             </li>
             {% else %}
             <li class="nav-item">
