@@ -22,5 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("home/",wiki.home),
     path("UserMenu/",user.menu_usuarios),
-    path("info/<str:pkmn>",wiki.obtener_pokemon),
+    path("info/",wiki.obtener_pokemon),
 ]

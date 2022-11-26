@@ -1,0 +1,8 @@
+<html>
+    <strong>
+        Otras formas del Pokémon:
+    </strong>
+    {% for name, ident in formas %}
+        <li><a href="http://localhost:8000/info/?csrfmiddlewaretoken=NazlLzVD5XlGuQSp7dkQtG4dRUSrgameTuJ9hc96AKfxNhM9K3Lu3e2aW23Vnf0C&nameorid={{ident}}">{{name}}</a></li>
+    {% endfor %}
+</html>

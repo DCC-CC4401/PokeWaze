@@ -4,3 +4,4 @@ asgiref == 3.5.2
 pytz == 2022.2.1
 sqlparse == 0.4.3
 pandas == 1.4.4
+requests == 2.24.0
