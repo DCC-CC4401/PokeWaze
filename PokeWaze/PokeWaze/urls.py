@@ -28,7 +28,7 @@ urlpatterns = [
     path("menu/", user.menu_usuarios, name="menu_user"),
     path("register/", user.user_register, name="registro"),
     path("profile/", user.user_profile, name="perfil"),
-    path("profile/<str:username>", user.user_profile, name="perfil_de_usuario"),
+    path("profile/<str:aUsername>", user.user_profile, name="perfil_de_usuario"),
     path("profile/edit/", user.edit_user_profile, name="editar_perfil"),
     path("profiles/", user.list_of_users, name="perfiles"),
     path("login/", LoginView.as_view(redirect_authenticated_user=True, template_name="login.html"), name="login"),

@@ -16,9 +16,8 @@ def user_register(request:str)->render:
     form = UserRegisterForm(request.POST)
     if form.is_valid():
       form.save()
-      username = form.cleaned_data["username"]
       messages.success(request, "Usuario creado exitosamente")
-      return redirect(f'profile/{username}')
+      return redirect(f'profile/')
     else:
       messages.error(request, "Parámetros inválidos")
   else:
@@ -32,25 +31,26 @@ def user_register(request:str)->render:
   )
 
 @login_required
-def user_profile(request:str, username:str)->render:
+def user_profile(request:str, aUsername:str)->render:
   all_users = User.objects.all()
   searchedUser = None
-  for user in all_users:
-    if user.username == username:
-      searchedUser = user
+  for aUser in all_users:
+    if aUser.username == aUsername:
+      searchedUser = aUser
   if searchedUser == None:
     return render(
       request,
       template_name="userNotFounded.html",
       context={
-        "searched_username":username,
+        "searched_username":aUsername,
       }
     )
   return render(
     request,
     template_name="profile.html",
     context={
-      "pkmn_list":[1,23,4]
+      "lookigUser":searchedUser,
+      "pkmn_list":[1,23,4],
     }
   )
 

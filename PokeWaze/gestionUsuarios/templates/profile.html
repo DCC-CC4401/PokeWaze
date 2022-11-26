@@ -9,14 +9,17 @@ Profile
 {% block content %}
 <h2>Account Information</h2>
 <p>
-  <b>Name:</b> {{user.username}}
+  <b>Name:</b> {{lookigUser.username}}
   <br>
-  <b>Email:</b> <a href="mailto:{{user.email}}">{{user.email}}</a>
+  <b>Email:</b> <a href="mailto:{{lookigUser.email}}">{{lookigUser.email}}</a>
 </p>
-<button href="{% url 'editar_perfil' %}">Edit Profile</button>
+{% if user == lookigUser %}
+<a href="{% url 'editar_perfil' %}" style="border: solid; border-color: inherit;
+color: inherit; background-color: #e0e0e0; padding: 3px 7px;">Edit Profile</a>
+{% endif %}
 <h2>Personal Pokedex</h2>
 <p>
-  {% for pkmn_id in pkmn_list %} <!-- puede ser tb user.caja -->
+  {% for pkmn_id in pkmn_list %} <!-- puede ser tb lookigUser.caja -->
   <a href="{% url 'buscar' %}{{pkmn_id}}">
     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{pkmn_id}}.png"
     width="150" height="150">
