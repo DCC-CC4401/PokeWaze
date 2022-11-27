@@ -49,13 +49,18 @@ def user_profile(request:str, aUsername:str)->render:
         "searched_username":aUsername,
       }
     )
-  #searchedUser.id
+  searchId = searchedUser.id
+  all_boxes = Box.objects.all()
+  searchPkmnList = []
+  for box in all_boxes:
+    if box.user_id == searchId:
+      searchPkmnList.append(box)
   return render(
     request,
     template_name="profile.html",
     context={
       "lookigUser":searchedUser,
-      "pkmn_list":[1,23,4],
+      "pkmn_list":searchPkmnList,
     }
   )
 
