@@ -1,0 +1,24 @@
+{% extends "template.html" %}
+
+<!-- Title page -->
+{% block title %}
+List of Profiles
+{% endblock %}
+
+<!-- Content page -->
+{% block content %}
+<h2>PokeWazer{{ pokewazers|pluralize:"s" }}</h2>
+<hr>
+{% for pkwzr in pokewazers %}
+<p>
+  <a href="{% url 'perfil' %}{{ pkwzr.username }}"><b>{{ pkwzr.username }}</b></a>
+  <br>
+  <i>Size of pokedex:</i> {{ pkwzr.pkmns|length }}
+</p>
+<hr>
+{% empty %}
+<p>
+  No hay pokewazers :(
+</p>
+{% endfor %}
+{% endblock %}

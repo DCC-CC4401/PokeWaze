@@ -1,0 +1,21 @@
+{% extends "template.html" %}
+
+<!-- Title page -->
+{% block title %}
+Edit Profile
+{% endblock %}
+
+<!-- Content page -->
+{% block content %}
+<p>
+  <b>Name:</b> {{user.username}}
+</p>
+<!-- Create form
+<form class="form" method="post">
+  {% csrf_token %}
+  {{form.as_p}}
+
+  <button type="submit" id="submit">Save</button> 
+</form>
+-->
+{% endblock %}

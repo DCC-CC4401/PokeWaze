@@ -1,0 +1,36 @@
+{% extends "template.html" %}
+
+<!-- Title page -->
+{% block title %}
+Profile
+{% endblock %}
+
+<!-- Content page -->
+{% block content %}
+<h2>Account Information</h2>
+<p>
+  <b>Name:</b> {{lookigUser.username}}
+  {% if user == lookigUser %}
+  <br>
+  <b>Email:</b> <a href="mailto:{{lookigUser.email}}">{{lookigUser.email}}</a>
+</p>
+<a href="{% url 'editar_perfil' %}" style="border: solid; border-color: inherit;
+color: inherit; background-color: #e0e0e0; padding: 3px 7px;">Edit Profile</a>
+{% else %}
+</p>
+{% endif %}
+<h2>Personal Pokedex</h2>
+<p>
+  {% for pkmn_id in pkmn_list %} <!-- puede ser tb lookigUser.caja -->
+  <a href="{% url 'buscar' %}{{pkmn_id}}">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{pkmn_id}}.png"
+    width="150" height="150">
+  </a>
+  {% if forloop.counter|divisibleby:5 %}
+  <br>
+  {% endif %}
+  {% empty %}
+  You have not registered your pokemon yet.
+  {% endfor %}
+</p>
+{% endblock %}

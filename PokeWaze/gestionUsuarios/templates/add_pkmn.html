@@ -1,0 +1,40 @@
+{% extends "template.html" %}
+
+{% load static %}
+
+{% block title %}
+Añadir Pokémon
+{% endblock %}
+
+
+{% block content %}
+    <form action="EDITAR" method="post">
+        <!-- Name Pkmn -->
+        <div class="form-group">
+          <label for="pokemon_name">Pokémon name:</label>
+          <input
+            type="text"
+            class="form-ql"
+            id="pokemon_name"
+          />
+        <!-- Nickname Pkmn-->
+          <div class="form-group">
+            <label for="pokemon_nickname">Pokémon nickname:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="pokemon_nickname"
+            />
+        <!-- Lv. Pkmn -->
+          <div class="form-group">
+            <label for="pokemon_name">Pokémon level:</label>
+            <input
+              type="text"
+              class="form-q"
+              id="pokemon_level"
+            />
+        <!-- Button -->
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+{% endblock %}
