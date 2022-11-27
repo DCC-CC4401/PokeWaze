@@ -1,5 +1,5 @@
 .my-card {
-  background-image: url('../media/background/lightning.png');
+  background-image: url('media/background/lightning.png');
   border: 8px solid #ffe264;
   border-radius: 5px;
   padding: 1%;

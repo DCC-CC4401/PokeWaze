@@ -48,12 +48,13 @@
               height="35"
             />
           </a>
-          
-          <form class="d-flex" role="search">
+          <form class="d-flex" method="GET" action="/info/">
+            {% csrf_token %}
             <input
               class="form-control me-2 bg-dark"
               type="search"
-              placeholder="Write pokemon name or id"
+              name="nameorid"
+              placeholder="Pokemon name or id"
               aria-label="Search"
               style="color: lightgrey"
             />
