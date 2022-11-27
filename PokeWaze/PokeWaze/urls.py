@@ -23,4 +23,5 @@ urlpatterns = [
     path("home/",wiki.home),
     path("UserMenu/",user.menu_usuarios),
     path("info/",wiki.obtener_pokemon),
+    path("autosuggest/",wiki.autosuggest, name="autosuggest"),
 ]

@@ -1,5 +1,6 @@
 from turtle import title
 from django.shortcuts import render
+from django.http import JsonResponse
 from pathlib import Path
 import os
 import requests
@@ -74,10 +75,10 @@ def obtener_pokemon(request:str)->render:
     # descripción del pkmn (quedan a la chucha)
     req = requests.get(f"https://www.pokemon.com/us/pokedex/{pkmn_name}/", 'html.parser')
     start_idx = req.text.find('<div class="version-descriptions active">')
-    text = req.text[start_idx:]
-    pkmn_desc = text.split('\n')[5].strip() + '\n' + text.split('\n')[10].strip()
-    del text
+    text = req.text[start_idx:start_idx+1000]
     req.close()
+    pkmn_desc = text.split('\n')[5].strip() + '\n' + text.split('\n')[10].strip() if text.split('\n')[5].strip() != text.split('\n')[10].strip() else text.split('\n')[5].strip()
+    del text
 
     # Agregamos las variables a traves de un diccionario al html
     # Subimos la página
@@ -92,6 +93,16 @@ def obtener_pokemon(request:str)->render:
                   "desc":pkmn_desc,
                   "imageURL":f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{pkmn_id}.png"})
 
+
+# obtener lista para el autocompletado
+def autosuggest(request):
+    df = pd.read_csv(os.path.join(CVS_DIR,"pokemon.csv"))
+    og_query = request.GET.get('term')
+    query = og_query.lower()
+    df = df[df["identifier"].str.contains(query)]
+    df = df["identifier"].tolist()
+    df = [x.replace("-"," ").title() for x in df]
+    return JsonResponse(df, safe=False)
 
 ############################## MÉTODOS AUXILIARES ###############################################
 
