@@ -7,15 +7,15 @@ Edit Profile
 
 <!-- Content page -->
 {% block content %}
+<h2>{{ lookigUser.username }}</h2>
+<hr>
+{% if user == lookigUser %}
 <p>
-  <b>Name:</b> {{user.username}}
+  <b>Email:</b> <a href="mailto:{{ lookigUser.email }}">{{ lookigUser.email }}</a>
 </p>
-<!-- Create form
-<form class="form" method="post">
-  {% csrf_token %}
-  {{form.as_p}}
-
-  <button type="submit" id="submit">Save</button> 
-</form>
--->
+{% endif %}
+<hr>
+<h2>Personal Pokedex</h2>
+<a href="{% url 'add_a_pkmn' %}" style="border: solid; border-color: inherit;
+color: inherit; background-color: #e0e0e0; padding: 3px 7px;">Add Pokemon</a>
 {% endblock %}

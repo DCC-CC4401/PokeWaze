@@ -7,20 +7,17 @@ Profile
 
 <!-- Content page -->
 {% block content %}
-<h2>Account Information</h2>
+<h2>{{ lookigUser.username }}</h2>
+<hr>
+{% if user == lookigUser %}
 <p>
-  <b>Name:</b> {{lookigUser.username}}
-  {% if user == lookigUser %}
-  <br>
-  <b>Email:</b> <a href="mailto:{{ lookigUser.email }}">{{ lookigUser.email }}</a>
+  <b>email:</b> <a href="mailto:{{ lookigUser.email }}">{{ lookigUser.email }}</a>
 </p>
 <a href="{% url 'editar_perfil' %}" style="border: solid; border-color: inherit;
 color: inherit; background-color: #e0e0e0; padding: 3px 7px;">Edit Profile</a>
-{% else %}
-</p>
 {% endif %}
 <hr>
-<h2>Personal Pokedex</h2>
+<h3>Personal Pokedex</h3>
 {% for pkmn in pkmn_list %}
 {% if forloop.counter == 1 %}
 <table>
