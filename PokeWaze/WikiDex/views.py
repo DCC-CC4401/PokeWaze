@@ -11,7 +11,7 @@ import pandas as pd
 
 def home(request:str)->render:
     return render(request=request,
-                  template_name="template.html")
+                  template_name="home.html")
 
 def obtener_pokemon(request:str)->render:
     """Entrega información sobre el Pokémon
