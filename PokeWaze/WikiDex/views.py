@@ -95,6 +95,7 @@ def obtener_pokemon(request:str)->render:
 
 
 # obtener lista para el autocompletado
+# maximo 13 resultados
 def autosuggest(request):
     df = pd.read_csv(os.path.join(CVS_DIR,"pokemon.csv"))
     og_query = request.GET.get('term')
@@ -102,7 +103,7 @@ def autosuggest(request):
     df = df[df["identifier"].str.contains(query)]
     df = df["identifier"].tolist()
     df = [x.replace("-"," ").title() for x in df]
-    return JsonResponse(df, safe=False)
+    return JsonResponse(df[:13], safe=False)
 
 ############################## MÉTODOS AUXILIARES ###############################################
 
