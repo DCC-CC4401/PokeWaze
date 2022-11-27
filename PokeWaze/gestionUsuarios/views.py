@@ -2,7 +2,11 @@ from django.shortcuts import render, redirect
 from .forms import UserRegisterForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
 from django.contrib.auth.models import User
+from gestionUsuarios.models import Feedback
+import datetime
+
 
 # Create your views here.
 def menu_usuarios(request:str)->render:
@@ -92,3 +96,19 @@ def add_pkmn(request:str)->render:
     request=request,
     template_name="add_pkmn.html"
   )
+
+
+def menu_feedback(request:str)->render:
+  if request.method=="POST":
+    fb = request.POST["fb"]
+    dt = datetime.date.today()
+    uid = request.user.id
+    newFB = Feedback(sender_id = uid, text = fb, created_at = dt)
+    newFB.save()
+    return render(request=request, template_name="feedbackSent.html")
+  if request.user.is_authenticated:
+    return render(
+      request=request,
+      template_name="feedback.html"
+    )
+  return redirect("../login/")

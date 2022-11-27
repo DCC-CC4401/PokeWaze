@@ -37,3 +37,8 @@ class Box(models.Model):
   pkmn_id = models.ForeignKey(Pokemon,null=False,blank=False, on_delete=models.CASCADE)
   lvl_pkmn = models.IntegerField()
   nickname_pkmn = models.CharField(max_length=50)
+
+class Feedback(models.Model):
+  sender_id = models.IntegerField()
+  text = models.CharField(max_length=100)
+  created_at = models.DateField() 
