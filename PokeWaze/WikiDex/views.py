@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from pathlib import Path
 import os
-#import requests
+import requests
 
 CVS_DIR = Path(__file__).resolve().parent.parent.parent.joinpath("csv")
 
