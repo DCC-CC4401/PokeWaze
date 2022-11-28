@@ -4,6 +4,7 @@
   <head>
     <link rel="stylesheet" type="text/css" href="{% static 'css/cards.css' %}" />
   </head>
+
   <!-- Card -->
   <div class="card" style="width: 18rem">
   <p>
@@ -17,6 +18,7 @@
     />
     {{name}}
   </p>
+
   <!-- Image Pokémon -->
   <img src={{imageURL}} width="250" height="250" class="card-img-top" alt="..." />
   <div class="card-body">
@@ -29,15 +31,5 @@
     {% endfor %}
   </p>
 
-  <!-- Moves Pokémon -->
-  <h3>Moves:</h3>
-    <ul>
-      <li>Flame Wheel</li>
-      <li>Fire Spin</li>
-      <li>Flamethrower</li>
-    </ul>
-
-    <!-- Button -->
-    <a href="#" class="btn btn-primary">Go somewhere</a>
   </div>
 </html>

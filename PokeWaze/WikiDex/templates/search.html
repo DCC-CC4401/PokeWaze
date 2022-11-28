@@ -11,9 +11,15 @@ PokéWaze: {{name}}
       <!-- Name -->
       <h2>{{name}}</h2>
       <!-- Description -->
-      <p>
-        {{desc}}
-      </p>
+      <h3> Description by game </h3>
+      <table>
+        {% for game,dex in desc%}
+          <tr> 
+            <td> <strong> {{game}} </strong> </td> 
+            <td>{{dex}}</td>   
+          </tr>
+        {% endfor %}
+      </table>
     </div>
     {% include "partes/cards.html" %}
     <p>

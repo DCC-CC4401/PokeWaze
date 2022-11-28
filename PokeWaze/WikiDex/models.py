@@ -1,3 +1,65 @@
 from django.db import models
 
 # Create your models here.
+class DescriptionPokemon(models.Model):
+    AlphaSapphire = models.CharField(max_length=200,null=True,blank=True)
+    Black = models.CharField(max_length=200,null=True,blank=True)
+    Black2 = models.CharField(max_length=200,null=True,blank=True)
+    Blue = models.CharField(max_length=200,null=True,blank=True)
+    Crystal = models.CharField(max_length=200,null=True,blank=True)
+    Diamond = models.CharField(max_length=200,null=True,blank=True)
+    Emerald = models.CharField(max_length=200,null=True,blank=True)
+    Firered = models.CharField(max_length=200,null=True,blank=True)
+    Gold = models.CharField(max_length=200,null=True,blank=True)
+    Heartgold = models.CharField(max_length=200,null=True,blank=True)
+    Leafgreen = models.CharField(max_length=200,null=True,blank=True)
+    LetsGoEevee = models.CharField(max_length=200,null=True,blank=True)
+    LetsGoPikachu = models.CharField(max_length=200,null=True,blank=True)
+    Moon = models.CharField(max_length=200,null=True,blank=True)
+    OmegaRuby = models.CharField(max_length=200,null=True,blank=True)
+    Pearl = models.CharField(max_length=200,null=True,blank=True)
+    Platinum = models.CharField(max_length=200,null=True,blank=True)
+    Red = models.CharField(max_length=200,null=True,blank=True)
+    Ruby = models.CharField(max_length=200,null=True,blank=True)
+    Sapphire = models.CharField(max_length=200,null=True,blank=True)
+    Shield = models.CharField(max_length=200,null=True,blank=True)
+    Silver = models.CharField(max_length=200,null=True,blank=True)
+    Soulsilver = models.CharField(max_length=200,null=True,blank=True)
+    Sun = models.CharField(max_length=200,null=True,blank=True)
+    Sword = models.CharField(max_length=200,null=True,blank=True)
+    UltraMoon = models.CharField(max_length=200,null=True,blank=True)
+    UltraSun = models.CharField(max_length=200,null=True,blank=True)
+    White = models.CharField(max_length=200,null=True,blank=True)
+    White2 = models.CharField(max_length=200,null=True,blank=True)
+    X = models.CharField(max_length=200,null=True,blank=True)
+    Y = models.CharField(max_length=200,null=True,blank=True)
+    Yellow = models.CharField(max_length=200,null=True,blank=True)
+    
+class IdentifierNamePokemon(models.Model):
+    identifier = models.CharField(max_length=50, primary_key=True)
+    name = models.CharField(max_length=100)
+
+class Pokemon(models.Model):
+    identifier = models.CharField(max_length=200,null=True,blank=True)
+    species_id = models.IntegerField()
+    height = models.IntegerField()
+    weight = models.IntegerField()
+    hp = models.IntegerField()
+    attack = models.IntegerField()
+    sp_attack = models.IntegerField()
+    defense = models.IntegerField()
+    sp_defense = models.IntegerField()
+    speed = models.IntegerField()
+    type1 = models.CharField(max_length=200,null=True,blank=False)
+    type2 = models.CharField(max_length=200,null=True,blank=True)
+
+class SpeciesPokemon(models.Model):
+    evolution_chain_id = models.IntegerField()
+    order = models.IntegerField()
+    identifier = models.CharField(max_length=100,null=True,blank=True)
+    
+class FormsPokemon(models.Model):
+    form_name = models.CharField(max_length=100,null=True,blank=True)
+    pokemon_name = models.CharField(max_length=100,null=True,blank=True)   
+    pokemon_id = models.IntegerField()
+    identifier = models.CharField(max_length=100,null=True,blank=True)
