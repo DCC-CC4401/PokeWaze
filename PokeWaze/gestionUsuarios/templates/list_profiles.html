@@ -13,7 +13,7 @@ List of Profiles
 <p>
   <a href="{% url 'perfil' %}{{ pkwzr.username }}"><b>{{ pkwzr.username }}</b></a>
   <br>
-  <i>Size of pokedex:</i> {{ pkwzr.pkmns|length }}
+  <i>Size of pokedex:</i> {{ pkwzr|length }}
 </p>
 <hr>
 {% empty %}

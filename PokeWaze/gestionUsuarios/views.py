@@ -66,27 +66,6 @@ def user_profile(request:str, aUsername:str)->render:
   )
 
 @login_required
-def edit_user_profile(request:str)->render:
-  """ if request.method == "POST":
-    form = UserRegisterForm(request.POST) # change to EditProfileForm
-    if form.is_valid():
-      form.save()
-      username = form.cleaned_data["username"]
-      messages.success(request, "Usuario creado exitosamente")
-      return redirect(f'profile/{username}')
-    else:
-      messages.error(request, "Parámetros inválidos")
-  else:
-    form = UserRegisterForm() # change to EditProfileForm """
-  return render(
-    request,
-    template_name="edit_profile.html",
-    #context={
-    #  "form":form
-    #}
-  )
-
-@login_required
 def list_of_users(request:str)->render:
   users_list = User.objects.all()
   return render(
@@ -99,6 +78,14 @@ def list_of_users(request:str)->render:
 
 @login_required
 def add_pkmn(request:str)->render:
+  if request.method=="POST":
+    name = request.POST["pokemon_name"]
+    nickname = request.POST["pokemon_nickname"]
+    lvl = request.POST["pokemon_level"]
+    uid = request.user.id
+    newBox = Box(user_id = uid, pkmn_id = name, lvl_pkmn = lvl, nickname_pkmn = nickname)
+    newBox.save()
+    return redirect(f'../profile/{request.user.username}')
   return render(
     request=request,
     template_name="add_pkmn.html"

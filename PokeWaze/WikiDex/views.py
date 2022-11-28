@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from pathlib import Path
 import os
-import requests
+#import requests
 
 CVS_DIR = Path(__file__).resolve().parent.parent.parent.joinpath("csv")
 
@@ -73,12 +73,13 @@ def obtener_pokemon(request:str)->render:
     list_forms = list_evolutions["other"]
     
     # descripción del pkmn (quedan a la chucha)
-    req = requests.get(f"https://www.pokemon.com/us/pokedex/{pkmn_name}/", 'html.parser')
+    """ req = requests.get(f"https://www.pokemon.com/us/pokedex/{pkmn_name}/", 'html.parser')
     start_idx = req.text.find('<div class="version-descriptions active">')
     text = req.text[start_idx:start_idx+1000]
     req.close()
     pkmn_desc = text.split('\n')[5].strip() + '\n' + text.split('\n')[10].strip() if text.split('\n')[5].strip() != text.split('\n')[10].strip() else text.split('\n')[5].strip()
-    del text
+    del text """
+    pkmn_desc = "a"
 
     # Agregamos las variables a traves de un diccionario al html
     # Subimos la página
