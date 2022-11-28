@@ -1,0 +1,15 @@
+{% extends "template.html" %}
+
+<!-- Title page -->
+{% block title %}
+USER NOT FOUNDED
+{% endblock %}
+
+<!-- Content page -->
+{% block content %}
+<h2>Error 404</h2>
+<hr>
+<p>
+  User "{{ searched_username }}" doesn't exist.
+</p>
+{% endblock %}

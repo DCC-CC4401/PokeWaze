@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from pathlib import Path
 import os
-import requests
+#import requests
 
 CVS_DIR = Path(__file__).resolve().parent.parent.parent.joinpath("csv")
 
@@ -12,7 +12,7 @@ import pandas as pd
 
 def home(request:str)->render:
     return render(request=request,
-                  template_name="template.html")
+                  template_name="home.html")
 
 def obtener_pokemon(request:str)->render:
     """Entrega información sobre el Pokémon

@@ -1,0 +1,18 @@
+{% extends "template.html" %}
+
+<!-- Title page -->
+{% block title %}
+Log In
+{% endblock %}
+
+<!-- Content Page -->
+{% block content %}
+<h2>Log In</h2>
+<hr>
+<form class="form" method="post">
+  {% csrf_token %}
+  {{form.as_p}}
+
+  <button type="submit" id="submit">Log In</button> 
+</form>
+{% endblock %}

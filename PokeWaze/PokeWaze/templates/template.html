@@ -24,12 +24,21 @@
 
   <!-- Content -->
   <body>
-  <div class="container">
-    <div class="pokemon-info">
-    <!-- Inject content -->
-    {% block content %}
-    {% endblock %}
+    
+    {% if messages %}
+      {% for message in messages %}
+      <div>
+        {{ message }}
+      </div>
+      {% endfor %}
+    {% endif %}
+
+    <div class="container">
+      <div class="pokemon-info">
+        <!-- Inject content -->
+        {% block content %}
+        {% endblock %}
+      </div>
     </div>
-  </div>
   </body>
 </html>

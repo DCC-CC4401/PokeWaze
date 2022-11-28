@@ -1,0 +1,17 @@
+{% extends "template.html" %}
+
+<!-- Title page -->
+{% block title %}
+Feedback
+{% endblock %}
+
+<!-- Content Page -->
+{% block content %}
+<h2>Send us your feedback:</h2>
+<hr>
+<form class="form" method="POST">
+    {% csrf_token %}
+    <p><textarea rows="15" cols="45" name="fb" maxlength="100"></textarea></p>
+    <p><button type="submit" id="submit">Submit Report</button></p>
+</form>
+{% endblock %}

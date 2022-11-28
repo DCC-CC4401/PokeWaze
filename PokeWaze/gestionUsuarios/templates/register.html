@@ -1,0 +1,18 @@
+{% extends "template.html" %}
+
+<!-- Title page -->
+{% block title %}
+Registration
+{% endblock %}
+
+<!-- Content Page -->
+{% block content %}
+<h2>Create a new Account</h2>
+<hr>
+<form class="form" method="post">
+  {% csrf_token %}
+  {{form.as_p}}
+
+  <button type="submit" id="submit">Register</button> 
+</form>
+{% endblock %}
