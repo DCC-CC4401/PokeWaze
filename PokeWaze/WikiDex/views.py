@@ -1,10 +1,19 @@
 from turtle import title
 from django.shortcuts import render
 from WikiDex.models import *
+from django.http import JsonResponse
+from pathlib import Path
+import os
+import requests
+
+CVS_DIR = Path(__file__).resolve().parent.parent.parent.joinpath("csv")
+
+# Create your views here.
+import pandas as pd
 
 def home(request:str)->render:
     return render(request=request,
-                  template_name="template.html")
+                  template_name="home.html")
 
 def obtener_pokemon(request:str)->render:
     """Entrega información sobre el Pokémon
@@ -70,6 +79,17 @@ def obtener_pokemon(request:str)->render:
                     "desc":pkmn_desc.items(),
                     "imageURL":f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{pkmn_id}.png"})
 
+
+# obtener lista para el autocompletado
+# maximo 13 resultados
+def autosuggest(request):
+    df = pd.read_csv(os.path.join(CVS_DIR,"pokemon.csv"))
+    og_query = request.GET.get('term')
+    query = og_query.lower()
+    df = df[df["identifier"].str.contains(query)]
+    df = df["identifier"].tolist()
+    df = [x.replace("-"," ").title() for x in df]
+    return JsonResponse(df[:13], safe=False)
 
 ############################## MÉTODOS AUXILIARES ###############################################
 

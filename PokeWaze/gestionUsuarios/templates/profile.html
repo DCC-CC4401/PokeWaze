@@ -7,30 +7,45 @@ Profile
 
 <!-- Content page -->
 {% block content %}
-<h2>Account Information</h2>
+<h2>{{ lookigUser.username }}</h2>
+<hr>
+{% if user == lookigUser %}
 <p>
-  <b>Name:</b> {{lookigUser.username}}
-  {% if user == lookigUser %}
-  <br>
-  <b>Email:</b> <a href="mailto:{{lookigUser.email}}">{{lookigUser.email}}</a>
+  <b>email:</b> <a href="mailto:{{ lookigUser.email }}">{{ lookigUser.email }}</a>
 </p>
 <a href="{% url 'editar_perfil' %}" style="border: solid; border-color: inherit;
 color: inherit; background-color: #e0e0e0; padding: 3px 7px;">Edit Profile</a>
-{% else %}
-</p>
+<hr>
 {% endif %}
-<h2>Personal Pokedex</h2>
-<p>
-  {% for pkmn_id in pkmn_list %} <!-- puede ser tb lookigUser.caja -->
-  <a href="{% url 'buscar' %}{{pkmn_id}}">
-    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{pkmn_id}}.png"
-    width="150" height="150">
-  </a>
+<h3>Personal Pokedex</h3>
+{% for pkmn in pkmn_list %}
+{% if forloop.counter == 1 %}
+<table>
+  <tbody>
+    <tr>
+{% endif %}
+      <td>
+        <a href="{% url 'buscar' %}{{ pkmn.pkmn_id }}">
+          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ pkmn.pkmn_id }}.png"
+          width="150" height="150">
+        </a>
+        <p>
+          <b>Nickname:</b> {{ pkmn.nickname_pkmn }}
+          <br>
+          <b>Level:</b> {{ pkmn.lvl_pkmn }}
+        </p>
+      </td>
+{% if forloop.counter != pkmn_list|length %}
   {% if forloop.counter|divisibleby:5 %}
-  <br>
+    </tr>
+    <tr>
   {% endif %}
-  {% empty %}
-  You have not registered your pokemon yet.
-  {% endfor %}
-</p>
+{% else %}
+    </tr>
+  </tbody>
+</table>
+{% endif %}
+{% empty %}
+<p>You have not registered any pokemon yet.</p>
+{% endfor %}
 {% endblock %}

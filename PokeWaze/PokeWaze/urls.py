@@ -33,6 +33,7 @@ urlpatterns = [
     path("profiles/", user.list_of_users, name="perfiles"),
     path("login/", LoginView.as_view(redirect_authenticated_user=True, template_name="login.html"), name="login"),
     path("logout/", LogoutView.as_view(template_name="logout.html"), name="logout"),
-    path("update_box/",user.add_pkmn),
-    path("feedback/", user.menu_feedback)
+    path("update_box/",user.add_pkmn, name="add_a_pkmn"),
+    path("feedback/", user.menu_feedback, name="feedback"),
+    path("autosuggest/",wiki.autosuggest, name="autosuggest"),
 ]

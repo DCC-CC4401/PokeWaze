@@ -2,9 +2,8 @@ from django.shortcuts import render, redirect
 from .forms import UserRegisterForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect
 from django.contrib.auth.models import User
-from gestionUsuarios.models import Feedback
+from gestionUsuarios.models import Feedback, Box
 import datetime
 
 
@@ -20,8 +19,10 @@ def user_register(request:str)->render:
     form = UserRegisterForm(request.POST)
     if form.is_valid():
       form.save()
-      messages.success(request, "Usuario creado exitosamente")
-      return redirect(f'profile/')
+      messages.success(request,
+        """Usuario creado exitosamente. Vuelva a ingresar su Username y Password para ingresar"""
+      )
+      return redirect(f'../login')
     else:
       messages.error(request, "Parámetros inválidos")
   else:
@@ -49,13 +50,18 @@ def user_profile(request:str, aUsername:str)->render:
         "searched_username":aUsername,
       }
     )
-  #searchedUser.id
+  searchId = searchedUser.id
+  all_boxes = Box.objects.all()
+  searchPkmnList = []
+  for box in all_boxes:
+    if box.user_id == searchId:
+      searchPkmnList.append(box)
   return render(
     request,
     template_name="profile.html",
     context={
       "lookigUser":searchedUser,
-      "pkmn_list":[1,23,4],
+      "pkmn_list":searchPkmnList,
     }
   )
 
@@ -74,7 +80,7 @@ def edit_user_profile(request:str)->render:
     form = UserRegisterForm() # change to EditProfileForm """
   return render(
     request,
-    template_name="edit_profile.html", # cambiar a edit profile
+    template_name="edit_profile.html",
     #context={
     #  "form":form
     #}
@@ -91,13 +97,14 @@ def list_of_users(request:str)->render:
     }
   )
 
+@login_required
 def add_pkmn(request:str)->render:
   return render(
     request=request,
     template_name="add_pkmn.html"
   )
 
-
+@login_required
 def menu_feedback(request:str)->render:
   if request.method=="POST":
     fb = request.POST["fb"]

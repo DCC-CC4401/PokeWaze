@@ -135,5 +135,6 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, "PokeWaze/static"),
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = '../home'
 LOGIN_URL = 'login'
+SESSION_COOKIE_PATH = '/'
