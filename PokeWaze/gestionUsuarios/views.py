@@ -3,7 +3,7 @@ from .forms import UserRegisterForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from gestionUsuarios.models import Feedback, Box
+from gestionUsuarios.models import Feedback, Box, Pokemon
 import datetime
 
 
@@ -67,12 +67,19 @@ def user_profile(request:str, aUsername:str)->render:
 
 @login_required
 def list_of_users(request:str)->render:
+  sizes = {}
   users_list = User.objects.all()
+  all_boxes = Box.objects.all()
+  for user in users_list:
+    sizes[user.username] = 0
+    for box in all_boxes:
+      if user.id == box.user_id:
+        sizes[user.username] += 1
   return render(
     request,
     template_name="list_profiles.html",
     context={
-      "pokewazers":users_list,
+      "sizes":sizes,
     }
   )
 

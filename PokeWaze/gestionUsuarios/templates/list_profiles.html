@@ -9,11 +9,11 @@ List of Profiles
 {% block content %}
 <h2>PokeWazer{{ pokewazers|pluralize:"s" }}</h2>
 <hr>
-{% for pkwzr in pokewazers %}
+{% for pkwzr, sizepoke in sizes.items %}
 <p>
-  <a href="{% url 'perfil' %}{{ pkwzr.username }}"><b>{{ pkwzr.username }}</b></a>
+  <a href="{% url 'perfil' %}{{ pkwzr }}"><b>{{ pkwzr }}</b></a>
   <br>
-  <i>Size of pokedex:</i> {{ pkwzr|length }}
+  <i>Size of pokedex:</i> {{ sizepoke }}
 </p>
 <hr>
 {% empty %}
