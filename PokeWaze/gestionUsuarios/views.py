@@ -3,11 +3,9 @@ from .forms import UserRegisterForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from gestionUsuarios.models import Feedback, Box, Pokemon
+from gestionUsuarios.models import Feedback, Box, Pokemon, IdentifierNamePokemon
 import datetime
 
-
-# Create your views here.
 def menu_usuarios(request:str)->render:
   return render(
     request=request,
@@ -35,15 +33,29 @@ def user_register(request:str)->render:
     }
   )
 
+@login_required 
+def delete_user(request):    
+  try:
+    request.user.delete()
+    messages.sucess(request, "The user has been successfully deleted.")
+  except:
+    messages.error(request, f"User '{request.user.username}' was not found")
+  return render(request, 'deleted_user.html')
+
 @login_required
 def user_profile(request:str, aUsername:str)->render:
-  all_users = User.objects.all()
-  searchedUser = None
-  for aUser in all_users:
-    if aUser.username == aUsername:
-      searchedUser = aUser
-      break
-  if searchedUser == None:
+  try:
+    searchedUser = User.objects.get(username = aUsername)
+    searchPkmnList = list(Box.objects.filter(user_id=searchedUser.id))
+    return render(
+      request,
+      template_name="profile.html",
+      context={
+        "lookigUser":searchedUser,
+        "pkmn_list":searchPkmnList,
+      }
+    )
+  except:
     return render(
       request,
       template_name="userNotFounded.html",
@@ -51,31 +63,13 @@ def user_profile(request:str, aUsername:str)->render:
         "searched_username":aUsername,
       }
     )
-  searchId = searchedUser.id
-  all_boxes = Box.objects.all()
-  searchPkmnList = []
-  for box in all_boxes:
-    if box.user_id == searchId:
-      searchPkmnList.append(box)
-  return render(
-    request,
-    template_name="profile.html",
-    context={
-      "lookigUser":searchedUser,
-      "pkmn_list":searchPkmnList,
-    }
-  )
 
 @login_required
 def list_of_users(request:str)->render:
   sizes = {}
   users_list = User.objects.all()
-  all_boxes = Box.objects.all()
   for user in users_list:
-    sizes[user.username] = 0
-    for box in all_boxes:
-      if user.id == box.user_id:
-        sizes[user.username] += 1
+    sizes[user.username] = len(list(Box.objects.filter(user_id = user.id)))
   return render(
     request,
     template_name="list_profiles.html",
@@ -91,18 +85,14 @@ def add_pkmn(request:str)->render:
     nickname = request.POST["pokemon_nickname"]
     lvl = request.POST["pokemon_level"]
     uid = request.user.id
-    all_poke = Pokemon.objects.all()
-    search_poke = None
-    for poke in all_poke:
-      if poke.identifier.name == name:
-        search_poke = poke
-        break
-    if search_poke != None:
+    try:
+      id_name = IdentifierNamePokemon.objects.get(name = name)
+      search_poke = Pokemon.objects.get(identifier = id_name)
       newBox = Box(user_id = uid, pkmn_id = search_poke, lvl_pkmn = lvl, nickname_pkmn = nickname)
       newBox.save()
       messages.success(request, "Pokémon has been added successfully.")
       return redirect(f'../profile/{request.user.username}')
-    else:
+    except:
       messages.error(request, "The entered pokemon name does not exist in our databases.")
   return render(
     request=request,
@@ -118,9 +108,7 @@ def menu_feedback(request:str)->render:
     newFB = Feedback(sender_id = uid, text = fb, created_at = dt)
     newFB.save()
     return render(request=request, template_name="feedbackSent.html")
-  if request.user.is_authenticated:
-    return render(
-      request=request,
-      template_name="feedback.html"
-    )
-  return redirect("../login/")
+  return render(
+    request=request,
+    template_name="feedback.html"
+  )

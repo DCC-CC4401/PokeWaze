@@ -8,28 +8,35 @@ Profile
 <!-- Content page -->
 {% block content %}
 <h2>{{ lookigUser.username }}</h2>
-<hr>
 {% if user == lookigUser %}
+<hr>
 <p>
-  <b>email:</b> <a href="mailto:{{ lookigUser.email }}">{{ lookigUser.email }}</a>
+  <b>email:</b> <a href="mailto:{{ user.email }}" style="color: inherit;">{{ lookigUser.email }}</a>
 </p>
+<a href="{% url 'delete_account' %}" style="border: solid; border-color: inherit;
+color: inherit; background-color: #fa7474; padding: 3px 7px; text-decoration: none;">Delete Account</a>
+{% endif %}
+<hr>
+<h3>Personal Pokedex</h3>
+{% if user == lookigUser %}
 <a href="{% url 'add_a_pkmn' %}" style="border: solid; border-color: inherit;
 color: inherit; background-color: #e0e0e0; padding: 3px 7px; text-decoration: none;">Add Pokemon</a>
-<hr>
+<a href="{% url 'delete_a_pkmn' %}" style="border: solid; border-color: inherit;
+color: inherit; background-color: #fa7474; padding: 3px 7px; text-decoration: none;">Remove Pokemon</a>
+<br>
 {% endif %}
-<h3>Personal Pokedex</h3>
 {% for pkmn in pkmn_list %}
 {% if forloop.counter == 1 %}
 <table>
   <tbody>
     <tr>
 {% endif %}
-      <td>
+      <td style="text-align: center;">
         <a href="{% url 'buscar' %}{{ pkmn.pkmn_id }}">
           <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ pkmn.pkmn_id }}.png"
           width="150" height="150">
         </a>
-        <p>
+        <p style="text-align: center;">
           <b>Nickname:</b> {{ pkmn.nickname_pkmn }}
           <br>
           <b>Level:</b> {{ pkmn.lvl_pkmn }}
@@ -46,6 +53,9 @@ color: inherit; background-color: #e0e0e0; padding: 3px 7px; text-decoration: no
 </table>
 {% endif %}
 {% empty %}
-<p>You have not registered any pokemon yet.</p>
+<br>
+<p>
+  You have not registered any pokemon yet.
+</p>
 {% endfor %}
 {% endblock %}

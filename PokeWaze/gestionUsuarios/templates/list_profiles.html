@@ -11,7 +11,11 @@ List of Profiles
 <hr>
 {% for pkwzr, sizepoke in sizes.items %}
 <p>
-  <a href="{% url 'perfil' %}{{ pkwzr }}"><b>{{ pkwzr }}</b></a>
+  <a href="{% url 'perfil' %}{{ pkwzr }}" style="color: inherit;
+  font-size: 23px;"><b>{{ pkwzr }}</b></a>
+  {% if pkwzr == user.username %}
+  <i>(you)</i>
+  {% endif %}
   <br>
   <i>Size of pokedex:</i> {{ sizepoke }}
 </p>
