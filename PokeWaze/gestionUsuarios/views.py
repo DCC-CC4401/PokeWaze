@@ -42,6 +42,7 @@ def user_profile(request:str, aUsername:str)->render:
   for aUser in all_users:
     if aUser.username == aUsername:
       searchedUser = aUser
+      break
   if searchedUser == None:
     return render(
       request,
@@ -90,9 +91,19 @@ def add_pkmn(request:str)->render:
     nickname = request.POST["pokemon_nickname"]
     lvl = request.POST["pokemon_level"]
     uid = request.user.id
-    newBox = Box(user_id = uid, pkmn_id = name, lvl_pkmn = lvl, nickname_pkmn = nickname)
-    newBox.save()
-    return redirect(f'../profile/{request.user.username}')
+    all_poke = Pokemon.objects.all()
+    search_poke = None
+    for poke in all_poke:
+      if poke.identifier.name == name:
+        search_poke = poke
+        break
+    if search_poke != None:
+      newBox = Box(user_id = uid, pkmn_id = search_poke, lvl_pkmn = lvl, nickname_pkmn = nickname)
+      newBox.save()
+      messages.success(request, "Pokémon has been added successfully.")
+      return redirect(f'../profile/{request.user.username}')
+    else:
+      messages.error(request, "The entered pokemon name does not exist in our databases.")
   return render(
     request=request,
     template_name="add_pkmn.html"
