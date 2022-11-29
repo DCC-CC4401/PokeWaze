@@ -100,6 +100,23 @@ def add_pkmn(request:str)->render:
   )
 
 @login_required
+def del_pkmn(request:str)->render:
+  if request.method=="POST":
+    pkmn = request.POST["pokemon"]
+    pkmn.delete()
+    messages.success(request, "Pokémon has been deleted successfully.")
+    return redirect(f'../profile/{request.user.username}')
+  else:
+    searchPkmnList = list(Box.objects.filter(user_id=request.user.id))
+    return render(
+      request=request,
+      template_name="delete_pkmn.html",
+      context={
+        "pkmn_list":searchPkmnList,
+      }
+    )
+
+@login_required
 def menu_feedback(request:str)->render:
   if request.method=="POST":
     fb = request.POST["fb"]

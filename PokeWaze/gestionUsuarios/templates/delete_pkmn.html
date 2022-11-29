@@ -1,0 +1,50 @@
+{% extends "template.html" %}
+
+<!-- Title page -->
+{% block title %}
+Profile
+{% endblock %}
+
+<!-- Content page -->
+{% block content %}
+<h2>Delete a Pokémon</h2>
+<hr>
+{% for pkmn in pkmn_list %}
+{% if forloop.counter == 1 %}
+<p>
+  Click on the Pokémon you want to delete.
+</p>
+<table>
+  <tbody>
+    <tr>
+{% endif %}
+      <td style="text-align: center;">
+        <form class="form" method="post">
+          {% csrf_token %}
+          <button name="pokemon" type="submit" value="{{ pkmn }}">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ pkmn.pkmn_id }}.png"
+            width="150" height="150">
+          </button>
+          <p style="text-align: center;">
+            <b>Nickname:</b> {{ pkmn.nickname_pkmn }}
+            <br>
+            <b>Level:</b> {{ pkmn.lvl_pkmn }}
+          </p>
+        </form>
+      </td>
+{% if forloop.counter != pkmn_list|length %}
+  {% if forloop.counter|divisibleby:5 %}
+    </tr>
+    <tr>
+  {% endif %}
+{% else %}
+    </tr>
+  </tbody>
+</table>
+{% endif %}
+{% empty %}
+<p>
+  You cannot delete a Pokémon because you haven't added any Pokémon to your Pokedex yet.
+</p>
+{% endfor %}
+{% endblock %}
