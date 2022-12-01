@@ -24,7 +24,9 @@ color: inherit; background-color: #e0e0e0; padding: 3px 7px; text-decoration: no
 <a href="{% url 'delete_a_pkmn' %}" style="border: solid; border-color: inherit;
 color: inherit; background-color: #fa7474; padding: 3px 7px; text-decoration: none;">Remove Pokemon</a>
 <br>
+<br>
 {% endif %}
+
 {% for name,pkmn in pkmn_list %}
 {% if forloop.counter == 1 %}
 <table>

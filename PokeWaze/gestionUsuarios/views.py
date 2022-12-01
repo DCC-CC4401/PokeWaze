@@ -118,8 +118,8 @@ def add_pkmn(request:str)->render:
 def del_pkmn(request:str)->render:
   if request.method=="POST":
     pkmnID = request.POST["pokemon"]
-    userID = request.user.id
-    pkmn = Box.objects.get(user_id = userID, pkmn_id = pkmnID)
+    #userID = request.user.id
+    pkmn = Box.objects.get(id=int(pkmnID))
     pkmn.delete()
     messages.success(request, "Pokémon has been deleted successfully.")
     return redirect(f'../profile/{request.user.username}')
