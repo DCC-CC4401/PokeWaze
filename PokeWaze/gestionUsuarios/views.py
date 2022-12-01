@@ -3,7 +3,8 @@ from .forms import UserRegisterForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from gestionUsuarios.models import Feedback, Box, Pokemon, IdentifierNamePokemon
+from gestionUsuarios.models import Feedback, Box
+from WikiDex.models import Pokemon, IdentifierNamePokemon
 import datetime
 
 def menu_usuarios(request:str)->render:
@@ -86,9 +87,8 @@ def add_pkmn(request:str)->render:
     lvl = request.POST["pokemon_level"]
     uid = request.user.id
     try:
-      id_name = IdentifierNamePokemon.objects.get(name = name)
-      search_poke = Pokemon.objects.get(identifier = id_name)
-      newBox = Box(user_id = uid, pkmn_id = search_poke, lvl_pkmn = lvl, nickname_pkmn = nickname)
+      poke_id = Pokemon.objects.get(identifier = name).id
+      newBox = Box(user_id = uid, pkmn_id = poke_id, lvl_pkmn = lvl, nickname_pkmn = nickname)
       newBox.save()
       messages.success(request, "Pokémon has been added successfully.")
       return redirect(f'../profile/{request.user.username}')
@@ -102,7 +102,9 @@ def add_pkmn(request:str)->render:
 @login_required
 def del_pkmn(request:str)->render:
   if request.method=="POST":
-    pkmn = request.POST["pokemon"]
+    pkmnID = request.POST["pokemon"]
+    userID = request.user.id
+    pkmn = Box.objects.get(user_id = userID, pkmn_id = pkmnID)
     pkmn.delete()
     messages.success(request, "Pokémon has been deleted successfully.")
     return redirect(f'../profile/{request.user.username}')
