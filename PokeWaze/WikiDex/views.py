@@ -26,22 +26,22 @@ def obtener_pokemon(request:str)->render:
     name_query += list(FormsPokemon.objects.filter(pokemon_name=pkmn_name))
     identifier_list = list(set(list(map(lambda x: x.identifier,name_query))))
     
-    print(identifier_list)
     # si name_query está vacío, el pokemon no es valido
     if len(identifier_list)==0:
         return render(request=request,
                        template_name="404.html")
     else:
         
-        data_pkmn = Pokemon.objects.get(identifier=identifier_list[0]).__dict__
+        pkmn_identifier = identifier_list[0]       
         
-        pkmn_identifier = data_pkmn["identifier"]
         # En caso que sea valido, crearemos un diccionario 
         # de la información obtenida del Pokémon.
         try:
-            ID = FormsPokemon.objects.get(identifier=identifier_list[0]).pokemon_id
+            ID = FormsPokemon.objects.get(identifier=pkmn_identifier).pokemon_id
+            data_pkmn = Pokemon.objects.get(id=ID).__dict__
             
         except:
+            data_pkmn = Pokemon.objects.get(identifier=pkmn_identifier).__dict__
             # pkmn_id (int): ID del Pokémon.
             ID = data_pkmn["id"]
 
@@ -132,8 +132,12 @@ def query_evolutions(pkmn_id:int,pkmn_name:str)->dict:
     
     # Obtenemos las otras formas del pkmn
     # Obtenemos los identificadores
-    pkmn_other_names = list(map(lambda x: IdentifierNamePokemon.objects.get(identifier=x.identifier).name,
-                            Pokemon.objects.filter(species_id=pkmn_spe_id)))
+    pkmn_other_names = []
+    for x in Pokemon.objects.filter(species_id=pkmn_spe_id):
+        if "nan" in list(FormsPokemon.objects.filter(identifier=x.identifier)):
+            pkmn_other_names.append(FormsPokemon.objects.get(identifier=x.identifier).pokemon_name)
+        else:
+            pkmn_other_names.append(IdentifierNamePokemon.objects.get(identifier=x.identifier).name)
 
     # Removemos el pkmn buscado
     # Removiendo el nombre
@@ -158,12 +162,22 @@ def query_evolutions(pkmn_id:int,pkmn_name:str)->dict:
     del pkmn_spe_id, aux
     
     #Obtenemos las evoluciones y sus nombres
-    pkmn_before_names = list(map(lambda x: IdentifierNamePokemon.objects.get(identifier=x.identifier).name,
-                             df_evo.filter(order__lt = pkmn_order)))
-                                                   
-    pkmn_after_names = list(map(lambda x: IdentifierNamePokemon.objects.get(identifier=x.identifier).name,
-                            df_evo.filter(order__gt = pkmn_order)))
     
+    pkmn_before_names = []
+    for x in df_evo.filter(order__lt = pkmn_order):
+        if "nan" in list(FormsPokemon.objects.filter(identifier=x.identifier)):
+            pkmn_before_names.append(FormsPokemon.objects.get(identifier=x.identifier).pokemon_name)
+        else:
+            pkmn_before_names.append(IdentifierNamePokemon.objects.get(identifier=x.identifier).name)
+    
+    
+    pkmn_after_names = []
+    for x in df_evo.filter(order__gt = pkmn_order):
+        if "nan" in list(FormsPokemon.objects.filter(identifier=x.identifier)):
+            pkmn_after_names.append(FormsPokemon.objects.get(identifier=x.identifier).pokemon_name)
+        else:
+            pkmn_after_names.append(IdentifierNamePokemon.objects.get(identifier=x.identifier).name)
+
     del pkmn_order, df_evo, evo_chain_id
     
     return {"before": pkmn_before_names,
