@@ -26,28 +26,27 @@ def obtener_pokemon(request:str)->render:
     name_query += list(FormsPokemon.objects.filter(pokemon_name=pkmn_name))
     identifier_list = list(set(list(map(lambda x: x.identifier,name_query))))
     
+    print(identifier_list)
     # si name_query está vacío, el pokemon no es valido
     if len(identifier_list)==0:
         return render(request=request,
                        template_name="404.html")
     else:
+        
+        data_pkmn = Pokemon.objects.get(identifier=identifier_list[0]).__dict__
+        
+        pkmn_identifier = data_pkmn["identifier"]
         # En caso que sea valido, crearemos un diccionario 
         # de la información obtenida del Pokémon.
         try:
-            data_pkmn = Pokemon.objects.get(identifier=identifier_list[0]).__dict__
+            ID = FormsPokemon.objects.get(identifier=identifier_list[0]).pokemon_id
             
-            # pkmn_id (int): ID del Pokémon.
-            pkmn_id = data_pkmn["id"]
-            
-            pkmn_identifier = data_pkmn["identifier"]
         except:
-            pkmn_id = FormsPokemon.objects.get(identifier=identifier_list[0]).pokemon_id
-            
-            data_pkmn = Pokemon.objects.get(id=pkmn_id).__dict__
-            
-            pkmn_identifier = data_pkmn["identifier"]
+            # pkmn_id (int): ID del Pokémon.
+            ID = data_pkmn["id"]
+
         # list_evolutions (list(str)): Lista de Evoluciones del Pokémon.
-        list_evolutions = query_evolutions(pkmn_id,pkmn_name)
+        list_evolutions = query_evolutions(data_pkmn["id"],pkmn_name)
     
         # list_forms (list(str)): Lista de otras formas del Pokémon.
         list_forms = list_evolutions["other"]
@@ -84,10 +83,10 @@ def obtener_pokemon(request:str)->render:
                     "formas": list_forms,
                     "before": list_evolutions["before"],
                     "after": list_evolutions["after"],
-                    "id":pkmn_id,
+                    "id":ID,
                     "desc":pkmn_desc.items(),
                     "alt": pkmn_name,
-                    "imageURL":f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{pkmn_id}.png"})
+                    "imageURL":f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{ID}.png"})
 
 
 # obtener lista para el autocompletado
