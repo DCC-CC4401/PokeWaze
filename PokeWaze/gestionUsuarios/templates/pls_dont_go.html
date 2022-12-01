@@ -1,0 +1,14 @@
+{% extends "template.html" %}
+
+{% block content %}
+<h2>Delete Account</h2>
+<hr>
+<p>
+  Are you sure you want to delete your account?
+</p>
+<form class="form" method="post">
+  {% csrf_token %}
+  <button name="confirm" type="submit" value="yes" style="background-color: #fa7474;">Yes, I'm sure</button>
+  <button name="confirm" type="submit" value="no">No, I was just kidding</button>
+</form>
+{% endblock %}

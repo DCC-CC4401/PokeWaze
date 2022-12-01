@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 from gestionUsuarios.models import Feedback, Box
 from WikiDex.models import *
 import datetime
-from django.http import JsonResponse
 
 def menu_usuarios(request:str)->render:
   return render(
@@ -20,11 +19,11 @@ def user_register(request:str)->render:
     if form.is_valid():
       form.save()
       messages.success(request,
-        """Usuario creado exitosamente. Vuelva a ingresar su Username y Password para ingresar"""
+        """New Account has been successfully created. Enter your username and password again to log in"""
       )
       return redirect(f'../login')
     else:
-      messages.error(request, "Parámetros inválidos")
+      messages.error(request, "Invalid parameters")
   else:
     form = UserRegisterForm()
   return render(
@@ -37,46 +36,48 @@ def user_register(request:str)->render:
 
 @login_required 
 def delete_user(request):    
-  try:
-    request.user.delete()
-    messages.sucess(request, "The user has been successfully deleted.")
-  except:
-    messages.error(request, f"User '{request.user.username}' was not found")
-  return render(request, 'deleted_user.html')
+  if request.method == "POST":
+    if request.POST["confirm"] == "yes":
+      request.user.delete()
+      messages.success(request, "Your Account has been successfully deleted")
+      return redirect('../home')
+    elif request.POST["confirm"] == "no":
+      messages.success(request, "Your Account has not been deleted")
+      return redirect(f'../profile/{request.user.username}')
+  return render(request, 'pls_dont_go.html')
 
 @login_required
 def user_profile(request:str, aUsername:str)->render:
-  #try:
-  searchedUser = User.objects.get(username = aUsername)
-  searchPkmnList = list(Box.objects.filter(user_id=searchedUser.id))
-  aux = []
-  for x in searchPkmnList:
-    try:
-      aux.append((IdentifierNamePokemon.objects.get(identifier=Pokemon.objects.get(id=x.pkmn_id).identifier).name,x))
-    except:
-      aux.append((FormsPokemon.objects.get(identifier=Pokemon.objects.get(id=x.pkmn_id).identifier),x))
-      
-  
-  searchPkmnList = aux.copy()
-  
-  del aux
-  
-  return render(
-    request,
-    template_name="profile.html",
-    context={
-      "lookigUser":searchedUser,
-      "pkmn_list":searchPkmnList,
-    }
-  )
-"""   except:
+  try:
+    searchedUser = User.objects.get(username = aUsername)
+    searchPkmnList = list(Box.objects.filter(user_id=searchedUser.id))
+    aux = []
+    for x in searchPkmnList:
+      try:
+        aux.append((IdentifierNamePokemon.objects.get(identifier=Pokemon.objects.get(id=x.pkmn_id).identifier).name,x))
+      except:
+        aux.append((FormsPokemon.objects.get(identifier=Pokemon.objects.get(id=x.pkmn_id).identifier),x))    
+    
+    searchPkmnList = aux.copy()
+    
+    del aux
+    
+    return render(
+      request,
+      template_name="profile.html",
+      context={
+        "lookigUser":searchedUser,
+        "pkmn_list":searchPkmnList,
+      }
+    )
+  except:
     return render(
       request,
       template_name="userNotFounded.html",
       context={
         "searched_username":aUsername,
       }
-    ) """
+    )
 
 @login_required
 def list_of_users(request:str)->render:
@@ -103,12 +104,16 @@ def add_pkmn(request:str)->render:
       list_identifier = list(IdentifierNamePokemon.objects.filter(name=name))
       list_identifier += list(FormsPokemon.objects.filter(pokemon_name=name))
       poke_id = Pokemon.objects.get(identifier = list_identifier[0].identifier).id
-      newBox = Box(user_id = uid, pkmn_id = poke_id, lvl_pkmn = lvl, nickname_pkmn = nickname)
-      newBox.save()
-      messages.success(request, "Pokémon has been added successfully.")
-      return redirect(f'../profile/{request.user.username}')
+      try:
+        newBox = Box(user_id = uid, pkmn_id = poke_id, lvl_pkmn = lvl, nickname_pkmn = nickname)
+        newBox.save()
+        messages.success(request, "Pokémon has been added successfully")
+        return redirect(f'../profile/{request.user.username}')
+      except:
+        messages.error(request, "Invalid parameters.")
     except:
-      messages.error(request, "The entered pokemon name does not exist in our databases.")
+      messages.error(request, "The entered Pokémon name does not exist in our databases")
+    
   return render(
     request=request,
     template_name="add_pkmn.html"
@@ -121,7 +126,7 @@ def del_pkmn(request:str)->render:
     #userID = request.user.id
     pkmn = Box.objects.get(id=int(pkmnID))
     pkmn.delete()
-    messages.success(request, "Pokémon has been deleted successfully.")
+    messages.success(request, "Pokémon has been deleted successfully")
     return redirect(f'../profile/{request.user.username}')
   else:
     searchPkmnList = list(Box.objects.filter(user_id=request.user.id))
@@ -146,12 +151,3 @@ def menu_feedback(request:str)->render:
     request=request,
     template_name="feedback.html"
   )
-  
-# obtener lista para el autocompletado
-# maximo 13 resultados
-def autosuggest(request):
-    og_query = request.GET.get('term')
-    query = og_query.lower()
-    df = list(map(lambda x: x.name, IdentifierNamePokemon.objects.filter(name__icontains=query)))
-    df += list(map(lambda x: x.pokemon_name, FormsPokemon.objects.filter(pokemon_name__icontains=query)))
-    return JsonResponse(df[:5], safe=False)
