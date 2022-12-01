@@ -32,15 +32,18 @@ color: inherit; background-color: #fa7474; padding: 3px 7px; text-decoration: no
     <tr>
 {% endif %}
       <td style="text-align: center;">
-        <a href="{% url 'buscar' %}{{ pkmn.pkmn_id }}">
-          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ pkmn.pkmn_id }}.png"
-          width="150" height="150">
-        </a>
-        <p style="text-align: center;">
-          <b>Nickname:</b> {{ pkmn.nickname_pkmn }}
-          <br>
-          <b>Level:</b> {{ pkmn.lvl_pkmn }}
-        </p>
+        <form class="form" method="get" action="{% url 'buscar' %}">
+          {% csrf_token %}
+          <button name="nameorid" type="submit" value="{{ pkmn.pkmn_id|title }}"> <!-- cabiar pkmn.pkmn_id por el nombre (minuscula o mayúscula) -->
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ pkmn.pkmn_id }}.png"
+            width="150" height="150">
+          </button>
+          <p style="text-align: center;">
+            <b>Nickname:</b> {{ pkmn.nickname_pkmn }}
+            <br>
+            <b>Level:</b> {{ pkmn.lvl_pkmn }}
+          </p>
+        </form>
       </td>
 {% if forloop.counter != pkmn_list|length %}
   {% if forloop.counter|divisibleby:5 %}
