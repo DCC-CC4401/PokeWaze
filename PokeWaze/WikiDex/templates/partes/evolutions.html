@@ -1,15 +1,20 @@
 <html>
-    <h3>
-        Evoluciona a...
-    </h3>
-    {% for name, ident in after %}
-        <li><a href="http://localhost:8000/info/?csrfmiddlewaretoken=NazlLzVD5XlGuQSp7dkQtG4dRUSrgameTuJ9hc96AKfxNhM9K3Lu3e2aW23Vnf0C&nameorid={{ident}}">{{name}}</a></li>
-    {% endfor %}
-    <h3>
-        Evoluciona de...
-    </h3>
-    {% for name, ident in before %}
-        <li><a href="http://localhost:8000/info/?csrfmiddlewaretoken=NazlLzVD5XlGuQSp7dkQtG4dRUSrgameTuJ9hc96AKfxNhM9K3Lu3e2aW23Vnf0C&nameorid={{ident}}">{{name}}</a></li>
-    {% endfor %}
-        
+    <!-- Ante-evolucion Pkmn -->
+    {% if after %}
+        <h5>
+            Evoluciones
+        </h5>
+        {% for name in after %}
+            <li><a href="http://localhost:8000/info/?csrfmiddlewaretoken=NazlLzVD5XlGuQSp7dkQtG4dRUSrgameTuJ9hc96AKfxNhM9K3Lu3e2aW23Vnf0C&nameorid={{name}}">{{name}}</a></li>
+        {% endfor %}
+    {% endif %}
+    <!-- Evolucion Pkmn -->
+    {% if before %}
+        <h5>
+            Ante-Evoluciones
+        </h5>
+        {% for name in before %}
+            <li><a href="http://localhost:8000/info/?csrfmiddlewaretoken=NazlLzVD5XlGuQSp7dkQtG4dRUSrgameTuJ9hc96AKfxNhM9K3Lu3e2aW23Vnf0C&nameorid={{name}}">{{name}}</a></li>
+        {% endfor %}
+    {% endif %}
 </html>
