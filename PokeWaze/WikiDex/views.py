@@ -37,13 +37,13 @@ def obtener_pokemon(request:str)->render:
         # En caso que sea valido, crearemos un diccionario 
         # de la información obtenida del Pokémon.
         try:
-            ID = FormsPokemon.objects.get(identifier=pkmn_identifier).pokemon_id
-            data_pkmn = Pokemon.objects.get(id=ID).__dict__
+            image_ID = FormsPokemon.objects.get(identifier=pkmn_identifier).pokemon_id
+            data_pkmn = Pokemon.objects.get(id=image_ID).__dict__
             
         except:
             data_pkmn = Pokemon.objects.get(identifier=pkmn_identifier).__dict__
-            # pkmn_id (int): ID del Pokémon.
-            ID = data_pkmn["id"]
+            # pkmn_id (int): image_ID del Pokémon.
+            image_ID = data_pkmn["id"]
 
         # list_evolutions (list(str)): Lista de Evoluciones del Pokémon.
         list_evolutions = query_evolutions(data_pkmn["id"],pkmn_name)
@@ -83,10 +83,10 @@ def obtener_pokemon(request:str)->render:
                     "formas": list_forms,
                     "before": list_evolutions["before"],
                     "after": list_evolutions["after"],
-                    "id":ID,
+                    "id":image_ID,
                     "desc":pkmn_desc.items(),
                     "alt": pkmn_name,
-                    "imageURL":f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{ID}.png"})
+                    "imageURL":f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{image_ID}.png"})
 
 
 # obtener lista para el autocompletado
