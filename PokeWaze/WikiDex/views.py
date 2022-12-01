@@ -86,8 +86,6 @@ def obtener_pokemon(request:str)->render:
                     "after": list_evolutions["after"],
                     "id":pkmn_id,
                     "desc":pkmn_desc.items(),
-                    "href":f"https://pokemondb.net/pokedex/pichu",
-                    "src":f"https://img.pokemondb.net/sprites/home/normal/{pkmn_identifier}.png",
                     "alt": pkmn_name,
                     "imageURL":f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{pkmn_id}.png"})
 

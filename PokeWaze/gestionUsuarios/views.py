@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from gestionUsuarios.models import Feedback, Box
-from WikiDex.models import Pokemon, IdentifierNamePokemon
+from WikiDex.models import *
 import datetime
 
 def menu_usuarios(request:str)->render:
@@ -45,25 +45,37 @@ def delete_user(request):
 
 @login_required
 def user_profile(request:str, aUsername:str)->render:
-  try:
-    searchedUser = User.objects.get(username = aUsername)
-    searchPkmnList = list(Box.objects.filter(user_id=searchedUser.id))
-    return render(
-      request,
-      template_name="profile.html",
-      context={
-        "lookigUser":searchedUser,
-        "pkmn_list":searchPkmnList,
-      }
-    )
-  except:
+  #try:
+  searchedUser = User.objects.get(username = aUsername)
+  searchPkmnList = list(Box.objects.filter(user_id=searchedUser.id))
+  aux = []
+  for x in searchPkmnList:
+    try:
+      aux.append((IdentifierNamePokemon.objects.get(identifier=Pokemon.objects.get(id=x.pkmn_id).identifier).name,x))
+    except:
+      aux.append((FormsPokemon.objects.get(identifier=Pokemon.objects.get(id=x.pkmn_id).identifier),x))
+      
+  
+  searchPkmnList = aux.copy()
+  
+  del aux
+  
+  return render(
+    request,
+    template_name="profile.html",
+    context={
+      "lookigUser":searchedUser,
+      "pkmn_list":searchPkmnList,
+    }
+  )
+"""   except:
     return render(
       request,
       template_name="userNotFounded.html",
       context={
         "searched_username":aUsername,
       }
-    )
+    ) """
 
 @login_required
 def list_of_users(request:str)->render:
@@ -87,7 +99,9 @@ def add_pkmn(request:str)->render:
     lvl = request.POST["pokemon_level"]
     uid = request.user.id
     try:
-      poke_id = Pokemon.objects.get(identifier = name).id
+      list_identifier = list(IdentifierNamePokemon.objects.filter(name=name))
+      list_identifier += list(FormsPokemon.objects.filter(pokemon_name=name))
+      poke_id = Pokemon.objects.get(identifier = list_identifier[0].identifier).id
       newBox = Box(user_id = uid, pkmn_id = poke_id, lvl_pkmn = lvl, nickname_pkmn = nickname)
       newBox.save()
       messages.success(request, "Pokémon has been added successfully.")

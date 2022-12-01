@@ -25,7 +25,7 @@ color: inherit; background-color: #e0e0e0; padding: 3px 7px; text-decoration: no
 color: inherit; background-color: #fa7474; padding: 3px 7px; text-decoration: none;">Remove Pokemon</a>
 <br>
 {% endif %}
-{% for pkmn in pkmn_list %}
+{% for name,pkmn in pkmn_list %}
 {% if forloop.counter == 1 %}
 <table>
   <tbody>
@@ -34,7 +34,7 @@ color: inherit; background-color: #fa7474; padding: 3px 7px; text-decoration: no
       <td style="text-align: center;">
         <form class="form" method="get" action="{% url 'buscar' %}">
           {% csrf_token %}
-          <button name="nameorid" type="submit" value="{{ pkmn.pkmn_id|title }}"> <!-- cabiar pkmn.pkmn_id por el nombre (minuscula o mayúscula) -->
+          <button name="nameorid" type="submit" value="{{ name|title }}"> 
             <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ pkmn.pkmn_id }}.png"
             width="150" height="150">
           </button>
