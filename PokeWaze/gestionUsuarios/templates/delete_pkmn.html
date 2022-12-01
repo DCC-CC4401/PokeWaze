@@ -21,7 +21,7 @@ Profile
       <td style="text-align: center;">
         <form class="form" method="post">
           {% csrf_token %}
-          <button name="pokemon" type="submit" value="{{ pkmn.pkmn_id }}">
+          <button name="pokemon" type="submit" value="{{ pkmn }}">
             <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ pkmn.pkmn_id }}.png"
             width="150" height="150">
           </button>

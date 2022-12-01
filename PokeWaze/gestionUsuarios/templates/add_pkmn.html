@@ -1,6 +1,24 @@
 {% extends "template.html" %}
 
 {% load static %}
+<head>
+<!-- import CSS -->
+<link type="text/css" rel="stylesheet" href="{% static 'css/bar.css' %}">
+<!-- jquery looks nice-->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<!--autocomplete stuff-->
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <script>
+    $( function() {
+      $( "#tags" ).autocomplete({
+        source: "{% url 'autosuggest' %}",
+      });
+    } );
+    </script>
+</head>
+
 
 {% block title %}
 Añadir Pokémon
@@ -15,11 +33,24 @@ Añadir Pokémon
       <!-- Name Pkmn -->
       <div class="form-group">
         <label for="pokemon_name"><b>Pokémon name:</b></label>
+        <!--
         <input
-          type="text"
+            class="form-control me-2 bg-dark"
+            type="search"
+            name="nameorid"
+            placeholder="Pokemon Name"
+            aria-label="Search"
+            style="color: lightgrey"
+            id = "tags"
+            />
+        -->
+        <input
+          type="search"
           class="form-ql"
-          id="pokemon_name"
+          id = "tags"
           name="pokemon_name"
+          placeholder="Pokemon Name"
+          aria-label="Search"
         />
       </div>
       <!-- Nickname Pkmn-->

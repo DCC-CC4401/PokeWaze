@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from gestionUsuarios.models import Feedback, Box
 from WikiDex.models import *
 import datetime
+from django.http import JsonResponse
 
 def menu_usuarios(request:str)->render:
   return render(
@@ -145,3 +146,12 @@ def menu_feedback(request:str)->render:
     request=request,
     template_name="feedback.html"
   )
+  
+# obtener lista para el autocompletado
+# maximo 13 resultados
+def autosuggest(request):
+    og_query = request.GET.get('term')
+    query = og_query.lower()
+    df = list(map(lambda x: x.name, IdentifierNamePokemon.objects.filter(name__icontains=query)))
+    df += list(map(lambda x: x.pokemon_name, FormsPokemon.objects.filter(pokemon_name__icontains=query)))
+    return JsonResponse(df[:5], safe=False)
